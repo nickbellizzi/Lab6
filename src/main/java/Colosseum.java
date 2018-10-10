@@ -36,8 +36,12 @@ public class Colosseum {
      * Input scanner. Use this to take in user's input for buildPokemon(). <br>
      * Useful functions: next(), nextInt() .
      */
-    static Scanner myScan;
+    static Scanner myScan = new Scanner(System.in);
 
+    /**
+     * The maximum possible number of Pokemon types.
+     */
+    static final int MAX_TYPES = 3;
     /**
      * We are now reimplementing this to meet our new Pokemon specifications. <br>
      * The process will still be the same for getting the information from the user,
@@ -53,7 +57,7 @@ public class Colosseum {
      * Requirements we should check the user for: <br>
      * - The type of Pokemon is 1 of the 3 choices <br>
      * - Hit points are between 1 and MAX_HIT_POINTS <br>
-     * - No more than 50 points are split between attack level and defense leve <br>
+     * - No more than 50 points are split between attack level and defense level <br>
      * - Attack level and defense level must have at least 1 point each <br>
      * Example of how this will look to the user:
      * <p>
@@ -102,8 +106,59 @@ public class Colosseum {
      * (Look, we can return objects too!)
      */
     public static Pokemon buildPokemon() {
-        Pokemon returnPokemon = null;
-        return returnPokemon;
+        boolean done = false;
+        int numType = 0;
+        while (!done) {
+            System.out.println("Select from the following Pokemon types:\n"
+                    + "     * 1 - Electric Pokemon\n"
+                    + "     * 2 - Fire Pokemon\n"
+                    + "     * 3 - Water Pokemon");
+            numType = myScan.nextInt();
+            if (numType <= 0 || numType > MAX_TYPES) {
+                break;
+            } else {
+                System.out.println("Sorry, you must pick either 1, 2, or 3");
+            }
+        }
+        System.out.print("Please name your Pokemon: ");
+        String name = myScan.nextLine();
+        System.out.println("\n");
+        int hitPts = 0;
+        while (!done) {
+            System.out.print("How many hit points will it have? (1-50): ");
+            hitPts = myScan.nextInt();
+            if (hitPts < 1 || hitPts > MAX_HIT_POINTS) {
+                System.out.println("\nSorry, hit points must be between 1 and 50");
+            } else {
+                System.out.println("\n");
+                break;
+            }
+        }
+        int attack = 0;
+        System.out.println("Split 50 points between defense and attack level.");
+        while (!done) {
+            System.out.print("Enter your attack level (1-49): ");
+            attack = myScan.nextInt();
+            if (attack < 1 || attack >= MAX_HIT_POINTS) {
+                System.out.println("Sorry, the attack level must be between 1 and 49");
+            } else {
+                System.out.println("\n");
+                break;
+            }
+        }
+        int defense = 0;
+        int maxDefense = MAX_HIT_POINTS - attack;
+        while (!done) {
+            System.out.print("Enter your defense level (1-" + maxDefense + "): ");
+            defense = myScan.nextInt();
+            if (defense < 1 || defense > maxDefense) {
+                System.out.println("Sorry, the defense level must be between 1 and " + maxDefense);
+            } else {
+                break;
+            }
+        }
+        Pokemon tempPokemon = new Pokemon(hitPts, attack, defense, name);
+        return tempPokemon;
     }
 
     /**

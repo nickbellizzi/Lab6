@@ -94,6 +94,25 @@ public class Pokemon {
     }
 
     /**
+     * Create a new Pokemon with passed values.
+     *
+     * @param hitPts hit points
+     * @param atck attack level
+     * @param dfns defense level
+     * @param n name
+     */
+    public Pokemon(final int hitPts, final int atck, final int dfns, final String n) {
+        final int d6num = 6;
+        final int d20num = 20;
+        this.d6 = new Dice(d6num);
+        this.d20 = new Dice(d20num);
+        this.hitPoints = hitPts;
+        this.attackLevel = atck;
+        this.defenseLevel = dfns;
+        this.name = n;
+    }
+
+    /**
      * Get the attack level of the pokemon.
      * @return attackLevel the attack level of the pokemon
      */
